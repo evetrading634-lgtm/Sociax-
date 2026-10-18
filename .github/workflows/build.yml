@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get Sociax source code
+      - name: Checkout source code
         uses: actions/checkout@v4
 
       - name: Install Java 17
@@ -23,19 +23,17 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-          cache: gradle
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
       - name: Check Android project
         run: |
-          if [ ! -f "gradlew" ]; then
-            echo "ERROR: Gradle wrapper not found."
-            echo "Check whether this repository contains an Android project."
+          if [ ! -f "./gradlew" ]; then
+            echo "ERROR: gradlew not found in repository root."
             exit 1
           fi
-          chmod +x gradlew
+          chmod +x ./gradlew
 
       - name: Build debug APK
         run: ./gradlew assembleDebug
